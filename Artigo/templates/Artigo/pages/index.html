@@ -1,0 +1,89 @@
+{% extends "global/base.html" %}
+{% block header %}
+
+<nav class="menu">
+  <ul class="menu-list">
+    <li class="menu-item">
+      <a href="{% url "artigo:Create" %}" class="menu-link">
+        Create
+      </a>
+    </li>
+    
+  </ul>
+</nav>
+
+<div class="search">
+  <form 
+  action="{% url 'artigo:search' %}" 
+  method="get"
+  >
+  <input 
+  type="search" 
+  class="search-input"
+  placeholder="Search"
+  id="search"
+  name="q"
+  value="{{ request.GET.q.strip }}"
+  >
+</form>
+</div>
+{% endblock header %}
+{% block content %}
+
+{% if page_obj %}
+
+      <div class="responsive-table">
+          <table class="Artigos-table">
+              <caption class="table-caption ">
+                  Artigos
+              </caption>
+
+              <thead>
+                  <tr class="table-row table-row-header">
+                  <th class="table-header">ID</th>
+                  <th class="table-header">Titulo</th>
+                  <th class="table-header">Data de Envio</th>
+                  <th class="table-header">Criador</th>
+                  <th class="table-header">Categoria</th>
+                  <th class="table-header">Artigo</th>
+                  </tr>
+              </thead>
+
+              <tbody>
+                  {% for Artigo in page_obj %}
+                  <tr class="table-row">
+                      <td class="table-cel">
+                      <a class="table-link" href="{% url "artigo:DetalheArtigo"  Artigo.id %}">
+                          {{ Artigo.id }}
+                      </a>
+                      </td>
+                      <td class="table-cel">
+                      {{ Artigo.Titulo }}
+                      </td>
+                      <td class="table-cel">
+                      {{ Artigo.envio_date }}
+                      </td>
+                      <td class="table-cel">
+                      {{ Artigo.usuario.Usuario_id.username }}
+                      </td>
+                      <td class="table-cel">
+                          {{ Artigo.categoria }}
+                      </td>
+                      <td class="table-cel">
+                          <a class="btn" href="media/{{Artigo.pdf}}"> VEJÁ </a>
+                      
+
+                      </td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+    {% else %}
+      <div class="single-contact">
+        <h1 class="single-contact-name">
+          Nenhum contato encontrado.
+        </h1>
+      </div>
+    {% endif %}
+{% endblock content %}

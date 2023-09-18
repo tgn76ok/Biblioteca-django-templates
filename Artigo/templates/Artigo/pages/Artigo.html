@@ -1,0 +1,42 @@
+{% extends "global/base.html" %}
+
+
+
+{% block content %}
+<div class="single-contact">
+    <h1 class="single-contact-name">
+      {{ Artigo.first_name }} {{ Artigo.last_name }}
+    </h1>
+
+    <p><b>ID:</b> {{ Artigo.id }}</p>
+    <p><b>Titulo:</b> {{ Artigo.Titulo }}</p>
+    <p><b>sinopse:</b> {{ Artigo.sinopse }}</p>
+    <p><b>data_criacao:</b> {{ Artigo.data_criacao }}</p>
+    <p><b>categoria:</b> {{ Artigo.categoria.nome }}</p>
+
+    {% if Artigo.Capa %}
+     <p><b>Capa:</b> {{ Artigo.Capa }}</p>
+    
+    {% endif %}
+    
+    
+    <p> <b>Baixar:</b>  <a class="btn" href="/media/{{Artigo.pdf}}"> VEJÁ </a></p>
+
+
+    <div class="contact-links">
+      <a class="btn btn-link" href="{% url 'artigo:update' Artigo.id %}">Update</a>
+
+      <form action="{% url 'artigo:delete' Artigo.id %}" method="POST">
+        {% csrf_token %}
+
+        {% if confirmation == 'no' %}
+          <input type="hidden" name="confirmation" value="yes">
+          <button class="btn btn-link btn-delete" type="submit">Confirma?</button>
+        {% else %}
+          <button class="btn btn-link btn-delete" type="submit">Delete</button>
+        {% endif %}
+      </form>
+    </div>
+
+</div>
+{% endblock content %}

@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    {% include 'global/partials/_head.html' %}
+
+</head>
+<body>
+    <header class="header">
+        <h1 class="header-heading">
+          <a href="{% url 'artigo:index' %}" class="header-link">
+            Biblioteca
+          </a>
+        </h1>
+        {% block header %}{% endblock header %}
+    
+      </header>
+    <main class="content">
+    {% block content %}{% endblock content %}
+    {% include 'global/partials/_pagination.html' %}
+
+    </main>
+</body>
+</html>
